@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,10 +19,13 @@ class MyApp extends StatelessWidget {
     const Color backgroundColor = Color(0xFF000000); // Pure Black
 
     final TextTheme appTextTheme = TextTheme(
-      displayLarge: GoogleFonts.inter(fontSize: 57, fontWeight: FontWeight.bold, color: Colors.white),
-      titleLarge: GoogleFonts.inter(fontSize: 22, fontWeight: FontWeight.w500, color: Colors.white),
+      displayLarge: GoogleFonts.inter(
+          fontSize: 57, fontWeight: FontWeight.bold, color: Colors.white),
+      titleLarge: GoogleFonts.inter(
+          fontSize: 22, fontWeight: FontWeight.w500, color: Colors.white),
       bodyMedium: GoogleFonts.inter(fontSize: 14, color: Colors.white70),
-      labelLarge: GoogleFonts.robotoMono(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+      labelLarge: GoogleFonts.robotoMono(
+          fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
     );
 
     return MaterialApp(
@@ -37,11 +39,9 @@ class MyApp extends StatelessWidget {
           secondary: secondaryColor,
           surface: Colors.black,
           onSurface: Colors.white,
-          background: backgroundColor,
           error: Colors.redAccent,
           onPrimary: Colors.white,
           onSecondary: Colors.white,
-          onBackground: Colors.white,
           onError: Colors.white,
           brightness: Brightness.dark,
         ),
@@ -49,15 +49,18 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: backgroundColor,
           elevation: 0,
-          titleTextStyle: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.bold),
+          titleTextStyle:
+              GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: primaryColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            textStyle: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w500),
+            textStyle:
+                GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
         cardTheme: CardThemeData(

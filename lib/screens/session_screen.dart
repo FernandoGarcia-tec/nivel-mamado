@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nivel_mamado/models.dart';
@@ -32,7 +31,8 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
     const uid = 'mock_user_id';
 
     for (int i = 0; i < _exercises.length; i++) {
-      final lastSession = await firestoreService.getLastExercisePerformance(uid, _exercises[i].name);
+      final lastSession = await firestoreService.getLastExercisePerformance(
+          uid, _exercises[i].name);
       if (lastSession != null) {
         setState(() {
           _exercises[i] = _exercises[i].copyWith(lastSession: lastSession);
@@ -78,7 +78,9 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
                 padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                 child: Text(
                   'Fantasma: ${exercise.lastSession!.weight}kg x ${exercise.lastSession!.reps} reps',
-                  style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontStyle: FontStyle.italic),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontStyle: FontStyle.italic),
                 ),
               ),
             const SizedBox(height: 8),
@@ -102,7 +104,9 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
                   icon: const Icon(Icons.add),
                   onPressed: () {
                     setState(() {
-                      final newSet = exercise.sets.isNotEmpty ? exercise.sets.last : const ExerciseSet(reps: 8, weight: 50);
+                      final newSet = exercise.sets.isNotEmpty
+                          ? exercise.sets.last
+                          : const ExerciseSet(reps: 8, weight: 50);
                       _exercises[exerciseIndex].sets.add(newSet);
                     });
                   },
@@ -128,9 +132,10 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
             value: set.isCompleted,
             onChanged: (bool? value) {
               setState(() {
-                _exercises[exerciseIndex].sets[setIndex] = set.copyWith(isCompleted: value ?? false);
+                _exercises[exerciseIndex].sets[setIndex] =
+                    set.copyWith(isCompleted: value ?? false);
               });
-              if(value ?? false) {
+              if (value ?? false) {
                 Vibration.vibrate(duration: 100);
               }
             },
@@ -138,23 +143,27 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
           ),
           Expanded(
             child: _buildTextField(weightController, 'Peso (kg)', (value) {
-              _exercises[exerciseIndex].sets[setIndex] = set.copyWith(weight: double.tryParse(value) ?? 0);
+              _exercises[exerciseIndex].sets[setIndex] =
+                  set.copyWith(weight: double.tryParse(value) ?? 0);
             }),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: _buildTextField(repsController, 'Reps', (value) {
-              _exercises[exerciseIndex].sets[setIndex] = set.copyWith(reps: int.tryParse(value) ?? 0);
+              _exercises[exerciseIndex].sets[setIndex] =
+                  set.copyWith(reps: int.tryParse(value) ?? 0);
             }),
           ),
           const SizedBox(width: 8),
-          Text('1RM: ${_calculate1RM(set.weight, set.reps)}', style: Theme.of(context).textTheme.bodySmall)
+          Text('1RM: ${_calculate1RM(set.weight, set.reps)}',
+              style: Theme.of(context).textTheme.bodySmall)
         ],
       ),
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, Function(String) onChanged) {
+  Widget _buildTextField(TextEditingController controller, String label,
+      Function(String) onChanged) {
     return TextField(
       controller: controller,
       keyboardType: TextInputType.number,
@@ -191,7 +200,7 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
           completedSets.add(set);
         }
       }
-      if(completedSets.isNotEmpty) {
+      if (completedSets.isNotEmpty) {
         completedExercises.add(exercise.copyWith(sets: completedSets));
       }
     }
@@ -209,10 +218,13 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
       await firestoreService.addHistory(uid, history);
       await gameLogic.updateUserStats(uid, totalVolume);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('¡Jale terminado! Ganaste ${xpGained.toStringAsFixed(2)} XP')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              '¡Jale terminado! Ganaste ${xpGained.toStringAsFixed(2)} XP')));
       Navigator.of(context).popUntil((route) => route.isFirst);
     } else {
-       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Completa al menos un set para terminar el jale.')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Completa al menos un set para terminar el jale.')));
     }
   }
 }
